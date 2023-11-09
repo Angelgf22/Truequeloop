@@ -1,0 +1,79 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mx-auto w-100">
+<h1 class="text-center display-3">Mi perfil</h1>
+<div class="row mt-5">
+    <div class="col-md-4 d-flex text-center">
+        <div>
+            <img src="{{ user.profile.profile_pic.url }}" class="img-fluid shadow rounded-circle mx-auto" alt="profile-image" style="height: 250px; width: 250px;">
+            <p class="display-6 mt-4">{{ user.first_name }} {{ user.last_name }}</p>
+            <p class="lead">Nombre de usuario: <strong>{{ user.username }}</strong></p>
+            <p class="text-muted">{{ user.email }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+
+
+                <h3>Gestión de cuenta</h3>
+                <a class="btn btn-primarybtn-outline-secondary my-3 py-2 px-4" style="color: #46d2b4 !important;" href="{% url 'edit-profile' %}" role="button">Editar mi perfil</a></br>
+                <button type="submit" onclick="confirmarEliminacionUser({{ user.id }});" class="btn btn-danger mb-3 py-2 px-4" style="background-color: #dc3545; border-color: #dc3545">Eliminar cuenta</button>
+
+                <h3>Gestión de mis trueques</h3>
+                <p class="lead">Trueques en total: <strong>{{ n_trades }}</strong></p>
+            {% for trade in trades %}
+                <div class="mb-3 border rounded bg-light" style="max-width: 600px;">
+                    <div class="card" style="max-height:350px; max-width: 600px; align-self: center;">
+                      <a href="{% url 'trade' id=trade.id %}" class="row g-0">
+                        <div class="col-md-4 col-sm-4 col-6" >
+                            <div class="align-items-center d-flex flex-wrap rounded" style="width: 200px; height: 230px; background-color: #f2f2f2;">
+                                <img src="{{ trade.main_image.url }}" class="tradable-img rounded" alt="...">
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-6  text-truncate">
+                          <div class="card-body" style="float: left;">
+                            <h5 class="card-title mb-1">{{ trade.title }}</h5>
+                            <small class="text-muted"><i class="fa fa-map-marker"></i> {{ trade.location }}</small>
+                            <p class="card-text">{{ trade.description }}</p>
+                          <small>Visibilidad: {% if trade.status == "INACTIVE" %}<i class="fa fa-eye-slash"></i>{% elif trade.status == "ACTIVE" %}<i class="fa fa-eye"></i>{% endif %}</small>
+                            <p class="card-text"><small class="text-muted">Creado el {{ trade.created_at|date:"j \d\e F \d\e Y" }}</small></p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="row text-center justify-content-center d-flex my-3">
+                        <a class="btn btn-primary btn-outline-secondary col-3 me-2" style="color: #46d2b4 !important;" href="{% url 'edit-trade'  trade_id=trade.id %}" role="button"><i class="fa fa-pencil"></i> Editar</a>
+                        <button type="submit" onclick="confirmarEliminacionTrade({{ trade.id }});" class="btn btn-danger col-3 ms-2" style="background-color: #dc3545; border-color: #dc3545"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+
+                </div>
+            {% endfor %}
+    </div>
+</div>
+
+
+
+</div>
+
+    <script>
+        function confirmarEliminacionTrade(id) {
+            var respuesta = confirm("¿Estás seguro de que quieres eliminar el trueque?");
+            if (respuesta === true) {
+                window.location.href = "/delete-trade/"+id;
+            }
+        }
+
+        function confirmarEliminacionUser(id) {
+            var respuesta = confirm("¿Estás seguro de que quieres eliminar tu cuenta?");
+            if (respuesta === true) {
+                window.location.href = "/delete-account/"+id;
+            }
+        }
+    </script>
+
+
+{% endblock %}

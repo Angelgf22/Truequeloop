@@ -1,0 +1,38 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto w-100">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#ChatsCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="row">
+        <div class="col-sm-3">
+        <h2 class="display-6">Chats abiertos</h2>
+                {% for open_chat in open_chats %}
+                    <a href="{% url 'chat' username=open_chat.username %}" role="button" class="mb-3 mt-3" style="max-width: 450px;">
+                        <div class="card mb-3" style="max-width: 450px;  border-color: #48d1b1 !important;">
+                            <div class="row g-0">
+                                <div class="col-md-4 d-flex align-items-center">
+                                  <img src="{{ open_chat.profile_pic }}" class="img-fluid shadow-sm rounded-circle mx-auto" alt="profile-image" style="height: 75px; width: 75px;">
+                                </div>
+                                <div class="col-md-8">
+                                      <div class="card-body">
+                                        <h5 class="card-title">{{ open_chat.first_name }} {{ open_chat.last_name }}</h5>
+                                        <p class="card-text"><small class="text-muted">Última conexión el {{ open_chat.last_login }}</small></p>
+                                        <p class="lead"> Pulsa para chatear</p>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+        </div>
+        <div class="col-9 mx-auto align-items-center text-center my-auto">
+            <h2 class="display-6">Elija un chat para continuar...</h2>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

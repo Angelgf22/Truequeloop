@@ -1,0 +1,352 @@
+[
+  {
+    "model": "truequeloop_app.location",
+    "pk": 1,
+    "fields": {
+      "location": "Álava"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 2,
+    "fields": {
+      "location": "Albacete"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 3,
+    "fields": {
+      "location": "Alicante"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 4,
+    "fields": {
+      "location": "Almería"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 5,
+    "fields": {
+      "location": "Asturias"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 6,
+    "fields": {
+      "location": "Ávila"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 7,
+    "fields": {
+      "location": "Badajoz"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 8,
+    "fields": {
+      "location": "Barcelona"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 9,
+    "fields": {
+      "location": "Burgos"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 10,
+    "fields": {
+      "location": "Cáceres"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 11,
+    "fields": {
+      "location": "Cádiz"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 12,
+    "fields": {
+      "location": "Cantabria"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 13,
+    "fields": {
+      "location": "Castellón"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 14,
+    "fields": {
+      "location": "Ciudad Real"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 15,
+    "fields": {
+      "location": "Córdoba"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 16,
+    "fields": {
+      "location": "Cuenca"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 17,
+    "fields": {
+      "location": "Gerona"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 18,
+    "fields": {
+      "location": "Granada"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 19,
+    "fields": {
+      "location": "Guadalajara"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 20,
+    "fields": {
+      "location": "Guipúzcoa"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 21,
+    "fields": {
+      "location": "Huelva"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 22,
+    "fields": {
+      "location": "Huesca"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 23,
+    "fields": {
+      "location": "Islas Baleares"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 24,
+    "fields": {
+      "location": "Jaén"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 25,
+    "fields": {
+      "location": "La Coruña"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 26,
+    "fields": {
+      "location": "La Rioja"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 27,
+    "fields": {
+      "location": "Las Palmas"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 28,
+    "fields": {
+      "location": "León"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 29,
+    "fields": {
+      "location": "Lérida"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 30,
+    "fields": {
+      "location": "Lugo"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 31,
+    "fields": {
+      "location": "Madrid"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 32,
+    "fields": {
+      "location": "Málaga"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 33,
+    "fields": {
+      "location": "Murcia"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 34,
+    "fields": {
+      "location": "Navarra"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 35,
+    "fields": {
+      "location": "Orense"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 36,
+    "fields": {
+      "location": "Palencia"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 37,
+    "fields": {
+      "location": "Pontevedra"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 38,
+    "fields": {
+      "location": "Salamanca"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 39,
+    "fields": {
+      "location": "Santa Cruz de Tenerife"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 40,
+    "fields": {
+      "location": "Segovia"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 41,
+    "fields": {
+      "location": "Sevilla"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 42,
+    "fields": {
+      "location": "Soria"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 43,
+    "fields": {
+      "location": "Tarragona"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 44,
+    "fields": {
+      "location": "Teruel"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 45,
+    "fields": {
+      "location": "Toledo"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 46,
+    "fields": {
+      "location": "Valencia"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 47,
+    "fields": {
+      "location": "Valladolid"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 48,
+    "fields": {
+      "location": "Vizcaya"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 49,
+    "fields": {
+      "location": "Zamora"
+    }
+  },
+  {
+    "model": "truequeloop_app.location",
+    "pk": 50,
+    "fields": {
+      "location": "Zaragoza"
+    }
+  }
+]

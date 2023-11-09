@@ -1,0 +1,41 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_staff %}
+        <div class="container mx-auto" style="max-width: 750px">
+                <h1 class="display-4 mb-3">Crear comunidad</h1>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="name">Título<i style="color: #318a79">*</i></label>
+                            <input name="name" type="text" class="form-control" id="name">
+                            {% if form.errors.name %}
+                            <div class = "text-danger">
+                                {{ form.errors.name }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="community_image" class="form-label">Imagen principal<i style="color: #318a79">*</i></label>
+                            <input name="community_image" class="form-control form-control-lg" id="community_image" type="file">
+                            {% if form.errors.community_image %}
+                            <div class = "text-danger">
+                                {{ form.errors.community_image }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" style="color: #48d1b1 !important;" class="btn btn-primary mb-3 px-3 py-2">Crear comunidad</button>
+            </form>
+
+        </div>
+
+
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            No tienes permisos para hecer esto.
+        </div>
+    {% endif %}
+{% endblock %}

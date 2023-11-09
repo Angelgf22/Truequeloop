@@ -1,0 +1,73 @@
+
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto my-4">
+    <div class="card-group">
+    {% if user.is_authenticated %}
+      <div class="card border rounded mx-1" style="border-color: #323b5b !important; box-shadow: 0px 23px 20px -12px rgb(80,187,165);">
+        <div class="card-body">
+            <h5 class="card-title">¡Explora nuestras comunidades!</h5>
+            <p class="card-text">Encuentra lo que necesites en las comunidades de trueque.</p>
+        </div>
+          <a href="{% url 'community' id=1 %}" class="btn btn-primary rounded-0 rounded-bottom" role="button" style="color: #34eec6 !important;">¡Intercambia material informático!</a>
+      </div>
+    {% else %}
+      <div class="card border rounded mx-1" style="border-color: #323b5b !important; box-shadow: 0px 23px 20px -12px rgba(80,187,165);">
+        <div class="card-body">
+            <h5 class="card-title">¡Registrate!</h5>
+            <p class="card-text">Registrate en nuestra web, para hacer trueques con otros usuarios.</p>
+        </div>
+          <a href="{% url 'register' %}" class="btn btn-primary rounded-0 rounded-bottom" role="button" style="color: #34eec6 !important;">¡Registrate!</a>
+      </div>
+    {% endif %}
+      <div class="card mx-1 border rounded" style="border-color: #46d2b4 !important; box-shadow: 0px 23px 20px -8px rgba(93,139,183);">
+        <div class="card-body">
+            <h5 class="card-title">¿Tienes algo que intercambiar?</h5>
+            <p class="card-text">Publica un trueque en una de nuestras comunidades.</p>
+        </div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'createTrade' %}" class="btn btn-primary rounded-0 rounded-bottom" role="button" style="color: #2e3754 !important; background-color: #34eec6; border-color: #34eec6;">¡Crea un trueque!</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary rounded-0 rounded-bottom" role="button" style="color: #2e3754 !important; background-color: #34eec6; border-color: #34eec6;">¡Crea un trueque!</a>
+        {% endif %}
+      </div>
+      <div class="card border rounded mx-1" style="border-color: #323b5b !important; box-shadow: 0px 23px 20px -12px rgba(80,187,165);">
+        <div class="card-body">
+            <h5 class="card-title">¿Falta alguna comunidad?</h5>
+            <p class="card-text">Sugiere una nueva comunidad rellenando el formulario.</p>
+        </div>
+                {% if user.is_authenticated %}
+            <a href="{% url 'community-request' %}" class="btn btn-primary rounded-0 rounded-bottom" role="button" style="color: #34eec6 !important;">¡Solicita una nueva comunidad!</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary rounded-0 rounded-bottom" role="button" style="color: #34eec6 !important;">¡Solicita una nueva comunidad!</a>
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+<div class="container mx-auto text-center rounded border mt-4 mb-3" style="background-color: #f6f6f6">
+
+<h1 class="display-4 mb-4 mt-5">Nuestras comunidades de trueque</h1>
+
+
+    <input class="form-control w-50 mx-auto mb-5" id="commSearch" type="text" placeholder="Búsqueda de comunidades">
+
+      <div class="row" id="communities-grid">
+          {% for community in communities %}
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-4 " id="community-card">
+                    <a href="{% url 'community' id=community.id %}" class="card mb-5 mx-auto shadow" style="width: 335px;">
+                      <img src="{{ community.community_image.url }}" class="card-img-top community-img" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ community.name }}</h5>
+                      </div>
+                    </a>
+                </div>
+          {% endfor %}
+        </div>
+</div>
+
+
+
+{% endblock %}

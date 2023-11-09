@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<!--Probado en Opera, Chrome y Microsoft Edge-->
+		<head>
+			<meta charset="utf-8">
+            <meta name="author" content="Ángel Gómez Ferrer">
+			<title>Truequeloop</title>
+			<link rel="icon" href="{% static './img/favicon.png' %}">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/websocket/1.0.31/websocket.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" href="{% static './css/styles.css' %}">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="{% static 'js/searchbar.js' %}"></script>
+        </head>
+
+		<body class="flex-wrapper">
+
+<!--------------Cabecera--------------->
+				<header>
+
+						<div class="m-4">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="container-fluid">
+                                    <a href="/" class="navbar-brand">
+                                        <img src="{% static 'img/truequeloop-logo-larga.png' %}" height="50" alt="CoolBrand">
+                                    </a>
+                                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                                        <div class="navbar-nav">
+                                            {% if user.is_authenticated %}
+                                                <a href="{% url 'profile' %}" class="nav-item nav-link">Perfil</a>
+                                                <a href="{% url 'open-chats' %}" class="nav-item nav-link">Mensajes</a>
+                                                {% if user.is_staff %}
+                                                    <a href="{% url 'moderation' %}" class="nav-item nav-link" style="color: #4046c2 !important;">Panel de moderación</a>
+                                                    {% if user.is_superuser %}
+                                                        <a href="/admin" class="nav-item nav-link" style="color: #4a54ff !important;">Panel de administración</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="navbar-nav ms-auto">
+                                            {% if user.is_authenticated %}
+                                                <a href="{% url 'logout' %}" class="nav-item nav-link">Cerrar sesión</a>
+                                            {% else %}
+                                                <a href="{% url 'login' %}" class="nav-item nav-link">Iniciar sesión</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+
+				</header>
+                <!-- Mensajes -->
+                {% if messages and not no_alert_messages %}
+                    <div class = "text-center mx-auto my-1" style="max-width: 400px;">
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                    {% endfor %}
+                    </div>
+                {% endif %}
+
+<!--------------Cuerpo principal--------------->
+				{% block content %}
+					<p>Parte central (Plantilla Base)</p>
+				{% endblock %}
+
+<!--------------Pie de página--------------->
+        <footer class="text-center text-lg-start" style="background-color: #333b5b; width: 100%;">
+                <div class="container d-flex justify-content-center py-5">
+                    <a href="https://twitter.com"><img class="social-icons" src="{% static './img/twitter.png'%}" alt="red social twitter"/></a>
+                    <a href="https://es-es.facebook.com"><img class="social-icons" src="{% static './img/facebook-new.png'%}" alt="red social facebook"/></a>
+                </div>
+                <!-- Texto pie de página -->
+                <div class="text-center text-white p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                    <p style="color: #48d1b1;">Ángel Gómez Ferrer - Truequeloop - 2023</p>
+                </div>
+        </footer>
+
+
+        {% block scripts %}
+        {% endblock %}
+        </body>
+</html>

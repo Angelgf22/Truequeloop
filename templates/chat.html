@@ -1,0 +1,156 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto w-100">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#ChatsCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="row">
+        <div class="col-sm-3">
+        <h2 class="display-6">Chats abiertos</h2>
+            <!-- Chat actual -->
+
+            <div class="card mb-3 shadow" style="max-width: 450px; border-color: #323b5b !important;">
+                <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="{{ profile_chat.profile_pic.url }}" class="img-fluid shadow-sm rounded-circle mx-auto" alt="profile-image" style="height: 75px; width: 75px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ user_chat.first_name}} {{ user_chat.last_name}}</h5>
+                    <p class="card-text"><small class="text-muted">Última conexión el {{ user_chat.last_login }}</small></p>
+                      <p class="lead"> Chat actual</p>
+                  </div>
+                </div>
+                </div>
+            </div>
+                {% for open_chat in open_chats %}
+                    <a href="{% url 'chat' username=open_chat.username %}" role="button" class="mb-3 mt-3" style="max-width: 450px;">
+                        <div class="card mb-3" style="max-width: 450px; border-color: #48d1b1 !important;">
+                            <div class="row g-0">
+                                <div class="col-md-4 d-flex align-items-center">
+                                  <img src="{{ open_chat.profile_pic }}" class="img-fluid shadow-sm rounded-circle mx-auto" alt="profile-image" style="height: 75px; width: 75px;">
+                                </div>
+                                <div class="col-md-8">
+                                      <div class="card-body">
+                                        <h5 class="card-title">{{ open_chat.first_name }} {{ open_chat.last_name }}</h5>
+                                        <p class="card-text"><small class="text-muted">Última conexión el {{ open_chat.last_login }}</small></p>
+                                        <p class="lead"> Pulsa para chatear</p>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+
+
+        </div>
+        <div class="col-9 mx-auto">
+            <h2 class="display-6">Chateando con {{ user_chat.username }}</h2>
+            <div class="card scrollbar-chat border-top" style="height: 600px; overflow: auto; flex-direction: column-reverse; border: none">
+                <div class="card-body">
+                    <div id="chat-messages" class="row">
+                        {% for message in messages %}
+                            {% if message.sender.username == user.username %}
+                                <div class="col-12">
+                                    <div class="message rounded-pill border my-2 px-4 py-2 d-inline-block" style="border-color: #48d1b1 !important; float: right;">
+                                        <div>
+                                            <div><strong>{{ message.sender }}:</strong> {{ message.content }}</div>
+                                            <small class="text-muted">{{ message.created_at }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="col-12">
+                                    <div class="message rounded-pill border my-2 px-4 py-2 d-inline-block" style="border-color: #333d7e !important;">
+                                        <div>
+                                            <div><strong>{{ message.sender }}:</strong> {{ message.content }}</div>
+                                            <small class="text-muted">{{ message.created_at }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entrada de mensaje -->
+            <div class="my-4">
+                <textarea name="description" class="form-control" id="message-input" style="border-color: #323b5b !important;" placeholder="Escribe un mensaje..." rows="2"></textarea>
+                <button id="send-button" class="btn btn-primary mt-2 rounded-pill mb-3 py-2 px-4" style="color: #4de3be; float: right;" value="Send">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const chatMessages = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+        const chat_uuid = '{{ uuid }}'
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/'
+            + 'chat'
+            + '/{{ uuid }}/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            console.log('onmessage')
+            const data = JSON.parse(e.data);
+            const message = data['message'];
+            const sender = data['sender'];
+            addMessage(sender, message)
+        }
+
+        chatSocket.onclose = function (e) {
+            console.log('onclose')
+        }
+
+
+        function addMessage(sender, content) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            const currentDate = new Date();
+            let formattedDate = new Date(currentDate).toLocaleString('es-ES', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            });
+            formattedDate = formattedDate.replace(',', ' a las');
+            if (sender === '{{ user.username }}') {
+                messageDiv.innerHTML = ` <div class="col-12"><div class="message rounded-pill border my-2 px-4 py-2 d-inline-block" style="border-color: #48d1b1 !important; float: right;"><div><div><strong>${sender}:</strong> ${content}</div><small class="text-muted">${formattedDate}</small></div></div></div>`;
+            }else{
+                messageDiv.innerHTML = ` <div class="col-12"><div class="message rounded-pill border my-2 px-4 py-2 d-inline-block" style="border-color: #333d7e !important;"><div><div><strong>${sender}:</strong> ${content}</div><small class="text-muted">${formattedDate}</small></div></div></div>`;
+            }
+            chatMessages.appendChild(messageDiv);
+        }
+
+
+        // Lógica para enviar mensajes
+        sendButton.addEventListener('click', () => {
+        const timestamp = new Date().toISOString()
+        const message = messageInput.value;
+        chatSocket.send(JSON.stringify({
+                'message': message,
+                'receiver': "{{ user_chat.username }}",
+                'sender' : "{{ user.username }}",
+                'uuid' : "{{ uuid }}",
+                'timestamp' : timestamp
+            }));
+
+        messageInput.value = '';  // Limpiar input
+
+        });
+
+</script>
+{% endblock %}

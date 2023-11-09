@@ -1,0 +1,7 @@
+Django==4.2.3
+psycopg2==2.9.3
+Pillow==10.0.0
+daphne==4.0.0
+channels==4.0.0
+uuid==1.30
+django-admin-interface

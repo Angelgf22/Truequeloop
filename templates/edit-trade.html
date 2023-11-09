@@ -1,0 +1,150 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container mx-auto" style="max-width: 750px">
+    <h1 class="display-4 mb-3">Modificar trueque</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="title">Título</label>
+                <input name="title" type="text" class="form-control" id="title" value="{{ trade.title }}">
+                {% if form.errors.title %}
+                <div class = "text-danger">
+                    {{ form.errors.title }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-4 mb-3 form-check form-switch">
+              <label class="formGroupExampleInput">Visibilidad</label>
+                <input type="hidden" value="INACTIVE" name='status'>
+                <input name="status" class="form-check-input" id="status" value="ACTIVE" type="checkbox" role="switch" style="background-color: #48d1b1 !important;" id="flexSwitchCheckDefault" {% if trade.status == 'ACTIVE' %} checked {% endif %}/>
+            </div>
+
+
+            <div class="col-4 mb-3">
+                <label for="formGroupExampleInput">Localización</label>
+                <input name="location" class="form-control" list="locationDatalistOptions" id="locationDataList" placeholder="Seleccione la localización" autocomplete="off" value="{{ trade.location }}" style="color: #323b5b">
+                <datalist id="locationDatalistOptions">
+                    {% for location in locations %}
+                        <option data-value={{ location.id }}>{{ location }}</option>
+                    {% endfor %}
+                </datalist>
+            {% if form.errors.location %}
+                <div class = "text-danger">
+                    {{ form.errors.location }}
+                </div>
+            {% endif %}
+            </div>
+
+            <div class="col-4 mb-3">
+                <label for="formGroupExampleInput">Comunidad</label>
+                <input name="community" class="form-control" list="commDatalistOptions" id="commDataList" placeholder="Seleccione la comunidad" value="{{ trade.community }}" autocomplete="off" style="color: #323b5b">
+                <datalist id="commDatalistOptions" >
+                    {% for community in communities %}
+                        <option data-value={{ community.id }}>{{ community }}</option>
+                    {% endfor %}
+                </datalist>
+            {% if form.errors.community %}
+                <div class = "text-danger">
+                    {{ form.errors.community }}
+                </div>
+            {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="description">Descripción</label>
+                <textarea name="description" class="form-control" id="description" rows="3">{{ trade.description }}</textarea>
+                {% if form.errors.description %}
+                <div class = "text-danger">
+                    {{ form.errors.description }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form- mb-3">
+                <label for="interested">Intereses</label>
+                <textarea name="interested" class="form-control" id="interested" rows="3">{{ trade.interested }}</textarea>
+                {% if form.errors.interested %}
+                <div class = "text-danger">
+                    {{ form.errors.interested }}
+                </div>
+                {% endif %}
+            </div>
+
+            <p class="mb-0">Imagen actual</p>
+            <img src="{{ trade.main_image.url }}" class="img-fluid border rounded mx-auto mb-2" alt="main-image" style="height: 250px; width: 250px;">
+
+            <div class="mb-3">
+                <label for="formFileLg" class="form-label">Cambiar imagen principal</label>
+                <input name="main_image" class="form-control form-control-lg" id="formFileLg" type="file">
+                {% if form.errors.main_image %}
+                <div class = "text-danger">
+                    {{ form.errors.main_image }}
+                </div>
+                {% endif %}
+            </div>
+            {% if trade_images %}
+                <p class="mb-0">Pulsa las imágenes para eliminarlas</p>
+            {% endif %}
+            {% for image in trade_images %}
+                <img src="{{ image.image.url }}" onclick="changeToDelete(this, {{ image.id }})" class="img-fluid" alt="extra-image" style="height: 150px; width: 150px; cursor: pointer;">
+                <input type="hidden" name="image_id" value="{{ image.id }}">
+            {% endfor %}
+            <div class="mb-4">
+                <label for="formFileMultiple" class="form-label">Subir más imágenes</label>
+                <input name="image" class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+
+            <input type="hidden" name="images_to_delete" value="{{ images_to_delete|join:',' }}">
+            <button type="submit" class="btn btn-primary mb-3 px-3 py-2" style="color: #34eec6;">Guardar cambios</button>
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+    </form>
+
+    </div>
+
+
+    <script>
+        function changeToDelete(imagen, id) {
+            if (imagen.classList.contains("dark-image")) {
+                imagen.classList.remove("dark-image");
+                remToDelete(id);
+            } else {
+                imagen.classList.add("dark-image");
+                addToDelete(id);
+
+            }
+        }
+
+        function addToDelete(imageId) {
+            var imagesDeleteInput = document.querySelector('input[name="images_to_delete"]');
+            var imagesDelete = imagesDeleteInput.value.split(',');
+
+            if (imagesDelete.indexOf(imageId.toString()) === -1) {
+                imagesDelete.push(imageId);
+                imagesDeleteInput.value = imagesDelete.join(',');
+            }
+        }
+
+        function remToDelete(imageId) {
+            var imagesDeleteInput = document.querySelector('input[name="images_to_delete"]');
+            var imagesDelete = imagesDeleteInput.value.split(',');
+            var index = imagesDelete.indexOf(imageId.toString());
+
+            if (index !== -1) {
+                imagesDelete.splice(index, 1);
+                imagesDeleteInput.value = imagesDelete.join(',');
+            }
+        }
+
+
+    </script>
+
+
+{% endblock %}

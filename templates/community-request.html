@@ -1,0 +1,53 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mx-auto" style="max-width: 750px">
+<div class="text-center mb-5">
+<h2 class="display-6">Sugiere una nueva comunidad</h2>
+<i class="text-muted">La administración revisará y aprobará su solicitud</i>
+</div>
+
+<form action="" method="POST" class="needs-validation" novalidate="" autocomplete="off" enctype="multipart/form-data">
+{% csrf_token %}
+    <div class="mb-3">
+        <label class="mb-2" for="email">¿Que nombre tendrá la comunidad?<i style="color: #318a79">*</i></label>
+        <input id="community_name" class="form-control" name="community_name" value="" required autofocus>
+        {% if form.errors.community_name %}
+        <div class = "text-danger">
+            {{ form.errors.community_name }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="community_description">¿De que trata la comunidad?<i style="color: #318a79">*</i></label>
+        <textarea name="community_description" class="form-control" id="community_description" rows="3"></textarea>
+        {% if form.errors.community_description %}
+        <div class = "text-danger">
+            {{ form.errors.community_description }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="sug_image" class="form-label">¿Quieres proponer alguna imagen para la comunidad?</label>
+        <input name="sug_image" class="form-control form-control-lg" id="sug_image" type="file">
+        {% if form.errors.sug_image %}
+        <div class = "text-danger">
+            {{ form.errors.sug_image }}
+        </div>
+        {% endif %}
+    </div>
+
+
+    <button type="submit"  style="color: #48d1b1 !important;"class="btn btn-primary mb-3 px-3 py-2">Solicitar comunidad</button>
+
+
+</form>
+
+
+
+</div>
+{% endblock %}

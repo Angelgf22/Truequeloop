@@ -1,0 +1,49 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto w-100">
+
+    {% if user.is_staff %}
+
+<h1 class="display-4 mb-4 mt-5 text-center">Gestión de comunidades</h1>
+        <div class="text-center mb-3">
+            <a class="btn btn-primary btn-outline-secondary" style="color: #46d2b4 !important;" href="{% url 'create-community' %}" role="button">Crear comunidad</a>
+        </div>
+
+    <input class="form-control w-50 mx-auto mb-5" id="commSearch" type="text" placeholder="Búsqueda de comunidades">
+
+      <div class="row" id="communities-grid">
+          {% for community in communities %}
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-4 mb-0 bg-white" id="community-card">
+                    <a href="{% url 'community' id=community.id %}" class="card mb-5 mx-auto shadow" style="width: 335px;">
+                      <img src="{{ community.community_image.url }}" class="card-img-top community-img" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ community.name }}</h5>
+                      </div>
+                    </a>
+                    <div class="row text-center justify-content-center d-flex my-5">
+                        <a class="btn btn-primary btn-outline-secondary col-3 me-2" style="color: #46d2b4 !important;" href="{% url 'edit-community'  community_id=community.id %}" role="button"><i class="fa fa-pencil"></i> Editar</a>
+                        <button type="submit" onclick="confirmarEliminacionComunidad({{ community.id }});" class="btn btn-danger col-3 ms-2" style="background-color: #dc3545; border-color: #dc3545"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
+          {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            No tienes permisos para hecer esto.
+        </div>
+    {% endif %}
+
+
+    <script>
+        function confirmarEliminacionComunidad(id) {
+            var respuesta = confirm("¿Estás seguro de que quieres eliminar esta comunidad?");
+            if (respuesta === true) {
+                window.location.href = "/delete-community/"+id;
+            }
+        }
+    </script>
+
+{% endblock %}

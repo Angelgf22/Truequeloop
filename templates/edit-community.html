@@ -1,0 +1,43 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_staff %}
+    <div class="container mx-auto" style="max-width: 750px">
+    <h1 class="display-4 mb-3">Editar comunidad</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="name">Título</label>
+                <input name="name" type="text" class="form-control" id="name" value="{{ community.name }}">
+                {% if form.errors.name %}
+                <div class = "text-danger">
+                    {{ form.errors.name }}
+                </div>
+                {% endif %}
+            </div>
+
+
+
+            <div class="mb-3">
+                <label for="community_image" class="form-label">Cambiar imagen principal</label>
+                <input name="community_image" class="form-control form-control-lg" id="community_image" type="file">
+                {% if form.errors.community_image %}
+                <div class = "text-danger">
+                    {{ form.errors.community_image }}
+                </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" style="color: #48d1b1 !important;" class="btn btn-primary mb-3 px-3 py-2">Guardar cambios</button>
+    </form>
+
+    </div>
+
+
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            No tienes permisos para hecer esto.
+        </div>
+    {% endif %}
+{% endblock %}

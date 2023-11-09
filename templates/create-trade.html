@@ -1,0 +1,92 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container mx-auto" style="max-width: 750px">
+    <h1 class="display-4 mb-3">Publica un trueque</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="title">Título<i style="color: #318a79">*</i></label>
+                <input name="title" type="text" class="form-control" id="title" value="{{ form.title.value }}">
+                {% if form.errors.title %}
+                <div class = "text-danger">
+                    {{ form.errors.title }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-4 mb-3">
+                <label for="location">Localización<i style="color: #318a79">*</i></label>
+                <input name="location" class="form-control" list="locationDatalistOptions" id="locationDataList" placeholder="Seleccione la localización" autocomplete="off" style="color: #323b5b">
+                <datalist id="locationDatalistOptions">
+                    {% for location in locations %}
+                        <option data-value={{ location.id }}>{{ location }}</option>
+                    {% endfor %}
+                </datalist>
+            {% if form.errors.location %}
+                <div class = "text-danger">
+                    {{ form.errors.location }}
+                </div>
+            {% endif %}
+            </div>
+
+            <div class="col-4 mb-3">
+                <label for="community">Comunidad<i style="color: #318a79">*</i></label>
+                <input name="community" class="form-control" list="commDatalistOptions" id="commDataList" placeholder="Seleccione la comunidad" autocomplete="off" style="color: #323b5b">
+                <datalist id="commDatalistOptions" >
+                    {% for community in communities %}
+                        <option data-value={{ community.id }}>{{ community }}</option>
+                    {% endfor %}
+                </datalist>
+            {% if form.errors.community %}
+                <div class = "text-danger">
+                    {{ form.errors.community }}
+                </div>
+            {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="description">Descripción<i style="color: #318a79">*</i></label>
+                <textarea name="description" class="form-control" id="description" rows="3">{{ form.description.value }}</textarea>
+                {% if form.errors.description %}
+                <div class = "text-danger">
+                    {{ form.errors.description }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form- mb-3">
+                <label for="interested">¿Qué le interesa?<i style="color: #318a79">*</i></label>
+                <textarea name="interested" class="form-control" id="interested" rows="3">{{ form.interested.value }}</textarea>
+                {% if form.errors.interested %}
+                <div class = "text-danger">
+                    {{ form.errors.interested }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="formFileLg" class="form-label">Imagen principal<i style="color: #318a79">*</i></label>
+                <input name="main_image" class="form-control form-control-lg" id="formFileLg" type="file">
+                {% if form.errors.main_image %}
+                <div class = "text-danger">
+                    {{ form.errors.main_image }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="formFileMultiple" class="form-label">Subir más imágenes</label>
+                <input name="image" class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+
+            <button type="submit" style="color: #48d1b1 !important;" class="btn btn-primary mb-3 px-3 py-2">Crear trueque</button>
+    </form>
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mx-auto" style="max-width: 750px">
+
+    <form action="{% url 'edit-profile' %}" method="POST" class="needs-validation bg-light px-5 pt-3 border rounded mb-1" enctype="multipart/form-data" novalidate="" autocomplete="off">
+        {% csrf_token %}
+
+            <div class="mb-3">
+                    <label class="mb-2 text-muted" for="username">Nombre de usuario</label>
+                    <input id="username" class="form-control" name="username" value="{{ request.user.username }}" required autofocus>
+                    <div class="invalid-feedback">
+                        Usuario es un campo obligatorio.
+                    </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="mb-2 text-muted" for="first_name">Nombre</label>
+                <input id="first_name" type="text" class="form-control" name="first_name" value="{{ request.user.first_name }}" required autofocus>
+                <div class="invalid-feedback">
+                    Nombre es un campo obligatorio.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="mb-2 text-muted" for="last_name">Apellidos</label>
+                <input id="last_name" type="text" class="form-control" name="last_name" value="{{ request.user.last_name }}" required autofocus>
+                <div class="invalid-feedback">
+                    Apellidos es un campo obligatorio.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="mb-2 text-muted" for="email">Correo electrónico</label>
+                <input id="email" type="email" class="form-control" name="email" value="{{ request.user.email }}" required autofocus>
+                <div class="invalid-feedback">
+                    Correo electrónico invalido.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="profile_pic" class="form-label">Foto de perfil</label>
+                <input name="profile_pic" class="form-control" id="profile_pic" type="file">
+                {% if form_profile_pic.errors %}
+                <div class = "text-danger">
+                    {{ form_profile_pic.errors.profile_pic }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="text-center">
+                <input class="btn btn-primary btn-outline-secondary mb-3" style="color: #46d2b4 !important;" type="submit" value="Actualizar perfil">
+            </div>
+
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+    </form>
+</div>
+
+{% endblock %}

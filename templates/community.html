@@ -1,0 +1,125 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container text-center">
+    <h1 class="display-3 mb-4">{{ community.name }}</h1>
+        <div class="row text-center">
+
+            <!-- Searchbar-->
+            <div class="col-8">
+                <form action="">
+                      <div class="input-group mb-4">
+                        <input type="search" placeholder="Buscador de trueques" id="trade-search" aria-describedby="button-addon5" class="form-control">
+                        <div class="input-group-append">
+                          <button id="button-addon5" type="submit" class="btn btn-primary btn-outline-secondary"><i class="fa fa-search" style="color: #34eec6;"></i></button>
+                        </div>
+                      </div>
+                </form>
+            </div>
+
+            <div class="col-4">
+                <input class="form-control" list="locationDatalistOptions" id="locationDataList" placeholder="Localización" style="color: #323b5b">
+                <datalist id="locationDatalistOptions">
+                    {% for location in locations %}
+                        <option>{{ location }}</option>
+                    {% endfor %}
+                </datalist>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container mt-5 mb-3 mx-auto w-100">
+
+        <div class="text-button-community-container">
+            <div class="row">
+                <div class="col-8">
+                    <h1 class="display-6 text-start ms-2 mb-2">Trueques disponibles: {{ n_trades }}</h1>
+                </div>
+                {% if user.is_authenticated %}
+                    <div class="col-4 d-flex align-items-center justify-content-end trade-btn-padding">
+                        <a class="btn btn-primary float-end btn-outline-secondary" style="color: #46d2b4 !important;" href="{% url 'createTrade' %}" role="button">Crear trueque</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <!-- Trueques -->
+        <div class="row" id="trades-grid">
+
+            {% for trade in trades %}
+                {% if trade.status == 'ACTIVE' %}
+                    <div class="card mb-3 mx-2" style="max-height:350px; max-width: 600px; align-self: center;">
+                      <a href="{% url 'trade' id=trade.id %}" class="row g-0">
+                        <div class="col-md-4 col-sm-4 col-4" >
+                            <div class="align-items-center d-flex flex-wrap rounded img-fluid" style="width: 200px; height: 230px; background-color: #f2f2f2;">
+                                <img src="{{ trade.main_image.url }}" class="tradable-img rounded" alt="Imagen trueque">
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-6 text-truncate">
+                          <div class="card-body" style="float: left; width: 100%">
+                            <h5 class="card-title mb-1">{{ trade.title }}</h5>
+                            <small class="text-muted location" id="location"><i class="fa fa-map-marker"></i> {{ trade.location }}</small>
+                            <p class="card-text text-truncate">{{ trade.description }}</p>
+                            <p class="card-text"><small class="text-muted">Creado el {{ trade.created_at|date:"j \d\e F \d\e Y" }}</small></p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+  // Función de filtrado para la búsqueda de trueques por título
+  function filterTrades() {
+    var value = $("#trade-search").val().toLowerCase();
+    $("#trades-grid .card").each(function () {
+      var cardTitle = $(this).find(".card-title").text().toLowerCase();
+      if (cardTitle.indexOf(value) > -1) {
+        if($(this).hasClass("hidden-card")) {
+          $(this).removeClass("hidden-card");
+        }
+      } else {
+        if(!$(this).hasClass("hidden-card")) {
+          $(this).addClass("hidden-card");
+        }
+      }
+    });
+  }
+
+  $("#trade-search").on("keyup", filterTrades);
+});
+
+$(document).ready(function () {
+  // Función de filtrado para la búsqueda de trueques por localización
+  function filterLocation() {
+    var value = $("#locationDataList").val().toLowerCase();
+    $("#trades-grid .card").each(function () {
+      var location = $(this).find(".location").text().toLowerCase();
+      if (location.indexOf(value) > -1) {
+        if($(this).hasClass("hidden-card")) {
+          $(this).removeClass("hidden-card");
+        }
+      } else {
+        if(!$(this).hasClass("hidden-card")) {
+          $(this).addClass("hidden-card");
+        }
+      }
+    });
+  }
+
+  $("#locationDataList").on("keyup", filterLocation);
+});
+
+
+</script>
+
+
+{% endblock %}

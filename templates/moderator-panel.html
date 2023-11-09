@@ -1,0 +1,57 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto w-100">
+
+    {% if user.is_staff %}
+        <div class="text-center mb-3">
+            <a class="btn btn-primary btn-outline-secondary" style="color: #46d2b4 !important;" href="{% url 'manage-communities' %}" role="button">Gestión de comunidades</a>
+        </div>
+        <h2 class="display-6 text-center">Solicitudes de comunidad</h2>
+
+        <div style="overflow-y:auto; max-width: 800px; max-height: 500px;" class="mx-auto">
+                {% for comunity_request in comunity_requests %}
+                        <div class="card mb-3 mx-auto" style="max-width: 750px;  border-color: #48d1b1 !important;">
+                            <div class="row g-0">
+                                <div class="col-md-4 d-flex align-items-center mt-1">
+                                    {% if  comunity_request.sug_image %}
+                                        <img src="{{ comunity_request.sug_image.url }}" class="img-fluid shadow-sm mx-auto" alt="profile-image" style="height: 75px; width: 75px;">
+                                    {% else %}
+                                        <div class="shadow-sm mx-auto bg-light text-center" alt="profile-image" style="height: 75px; width: 75px;"><i class="fa fa-eye-slash"></i></div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-7">
+                                      <div class="card-body">
+                                        <h5 class="card-title">{{ comunity_request.community_name }}</h5>
+                                        <p class="card-text">{{ comunity_request.community_description }}</p>
+                                        <p class="card-text"><small class="text-muted">Solicitud de: {{ comunity_request.requester.username }}</small></p>
+                                      </div>
+                                </div>
+                            <div class="col-md-1"><button type="submit" onclick="confirmarEliminacionRequest({{ comunity_request.id }});" class="btn btn-danger ms-2" style="background-color: #ffffff; color: #dc121d !important; border-color: #ffffff"><i class="fa fa-trash"></i></button></div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            No tienes permisos para hecer esto.
+        </div>
+    {% endif %}
+
+        <script>
+        function confirmarEliminacionRequest(id) {
+            var respuesta = confirm("¿Estás seguro de que quieres eliminar esta solicitud?");
+            if (respuesta === true) {
+                window.location.href = "/delete-request/"+id;
+            }
+        }
+        </script>
+
+
+
+
+{% endblock %}
